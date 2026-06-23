@@ -39,6 +39,6 @@ plt.scatter(s_close,s_open,alpha=0.8,s=stock_volume * 0.00001)
 plt.xlabel("Closing Prices[in USD]")
 plt.ylabel("Opening Prices[in USD]")
 plt.title("SentinalOne | Ticker: S | May-June '26")
-# Setting Ticks
+# Displaying Plot
 plt.show()
 # %%
