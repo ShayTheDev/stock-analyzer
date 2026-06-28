@@ -17,6 +17,6 @@ and filter out systemic market panic from true, company specific signals.
 * [x] - 'Clean Slate' ingestion pipeline: Correctly read the local CSV file so that each dtype is in its correct format. 
 
 ## Milestones - June 28th 2026
-* [] - Feature engineering & Clean target subsetting: isolate the target columns you need for the analyzer (Close and Daily Return), calculate your risk metrics, and cleanly separate your data without triggering Pandas errors. 
-* [] - Apply the control structure learned yesterday: Write a small script/function that takes the stock's data and flags high-risk/warning message (e.g: stock's daily '%' change) 
+* [x] - Feature engineering & Clean target subsetting: isolate the target columns you need for the analyzer (Close and Daily Return), calculate your risk metrics, and cleanly separate your data without triggering Pandas errors. 
+* [x] - Apply the control structure learned yesterday: Write a small script/function that takes the stock's data and flags high-risk/warning message (e.g: stock's daily '%' change) 
 * [] - Take the logical "Brain" you built in Milestone 1 and scale it up to handle massive chunks of data effortlessly using your new looping powers.
