@@ -16,5 +16,5 @@ period_one.columns.name = None
 period_one.index.name = 'Date'
 # %% QuickView 'period_one' -----------------
 period_one = period_one.round(2)
-print(period_one.describe())
+print(period_one.head()) 
 # %%
