@@ -22,19 +22,40 @@ year_one = period_one.loc['2021-06-30':'2022-06-29'].copy()
 year_two = period_one.loc['2022-06-30':'2023-06-29'].copy()
 year_one['Daily Return'] = (year_one['Close'].pct_change() * 100).round(2)
 year_two['Daily Return'] = (year_two['Close'].pct_change() * 100).round(2)
-print(year_one.head())
-print(year_two.head())
-# %% Range **Test**
-f_week = f_week.round(2)
-for date, daily_return in f_week['Daily Return'].items() :
-    if pd.isna(daily_return) :
-        continue
-    clean_date = date.strftime('%d-%m-%Y')
-    if daily_return > 10 :
-        print(f'{clean_date} : {daily_return}%')
-    elif daily_return < -12.5 :
-        print(f'{clean_date} : {daily_return}%')
-    else :
-        print(f'{clean_date} : {daily_return}%')
-# %% period_one div
+# %% Statistical Volatility Function
+def analyze_market_volatility(df_slice, negbound, posbound):
+    '''Calculate the volatility of a stock's time-frame
+    based on the provided negative and positive dynamic
+    bounds.'''
+    for date, daily_return in df_slice['Daily Return'].items() :
+        cl_date = date.strftime('%d-%m-%Y')
 
+        if pd.isna(daily_return):
+            continue
+
+        if daily_return >= posbound:
+            print(f'{cl_date}, {daily_return}% : Keep Going...')
+        elif daily_return <= negbound:
+            print(f'{cl_date}, {daily_return}% : Warning...stay put') 
+        else:
+            print(f'{cl_date}, {daily_return}% : As Uzhe')
+# %% Statistical Baseline Function
+def calculate_baseline(df_slice, scale:int):
+    '''Calculate the statistical baseline of a time-frame
+    from df_slice and scale'''
+    df_med = np.nanmedian(df_slice['Daily Return'])
+    df_upbound = np.nanquantile(df_slice['Daily Return'], .75)
+    df_lowbound = np.nanquantile(df_slice['Daily Return'], .25)
+    df_iqr = round(df_upbound - df_lowbound, 3) 
+    df_hbound = df_upbound + (df_iqr * scale)
+    df_lbound = df_lowbound - (df_iqr * scale)
+    m_base = (df_hbound, df_lbound)
+    print(f'IQR: {df_iqr} | UP: {df_hbound} | LOW: {df_lbound}')
+    return m_base
+# %% Testing Functionality
+y1_high, y1_low = calculate_baseline(year_one, 1)
+y2_high, y2_low = calculate_baseline(year_two, 1)
+analyze_market_volatility(year_one, y1_low, y1_high)
+analyze_market_volatility(year_two, y2_low, y2_high) 
+
+# %%
